@@ -20,8 +20,7 @@ const argv = yargs
 
 app.get('/', (req, res) => {
   clearInterval(intervalObj);
-  const currentDate = new Date();
-  res.send(`${currentDate.getUTCDate()}.0${currentDate.getUTCMonth()+1}.${currentDate.getUTCFullYear()} ${currentDate.getHours()}:${currentDate.getMinutes()}:${currentDate.getSeconds()}`)
+  res.send(formatCurrentData())
 })
 
 app.listen(port, () => {
@@ -29,7 +28,11 @@ app.listen(port, () => {
   console.log(`Server is listening on ${port}`)
 
   intervalObj = setInterval(() => {
-    const currentDate = new Date();
-    console.log(`${currentDate.getUTCDate()}.0${currentDate.getUTCMonth()+1}.${currentDate.getUTCFullYear()} ${currentDate.getHours()}:${currentDate.getMinutes()}:${currentDate.getSeconds()}`);
+    console.log(formatCurrentData());
   }, argv.interval);
 })
+
+function formatCurrentData() {
+  const currentDate = new Date();
+  return `${currentDate.getUTCDate()}.0${currentDate.getUTCMonth() + 1}.${currentDate.getUTCFullYear()} ${currentDate.getHours()}:${currentDate.getMinutes()}:${currentDate.getSeconds()}`;
+};
