@@ -4,6 +4,7 @@ const port = 3000
 const yargs = require('yargs');
 let intervalObj;
 
+
 const argv = yargs
     .option('interval', {
         alias: 'i',
@@ -19,7 +20,8 @@ const argv = yargs
 
 app.get('/', (req, res) => {
   clearInterval(intervalObj);
-  res.send(new Date().toISOString().replace(/T/, ' ').replace(/\..+/, ''))
+  const currentDate = new Date();
+  res.send(`${currentDate.getUTCDate()}.0${currentDate.getUTCMonth()+1}.${currentDate.getUTCFullYear()} ${currentDate.getHours()}:${currentDate.getMinutes()}:${currentDate.getSeconds()}`)
 })
 
 app.listen(port, () => {
@@ -27,9 +29,7 @@ app.listen(port, () => {
   console.log(`Server is listening on ${port}`)
 
   intervalObj = setInterval(() => {
-    console.log(new Date().toISOString().replace(/T/, ' ').replace(/\..+/, ''));
+    const currentDate = new Date();
+    console.log(`${currentDate.getUTCDate()}.0${currentDate.getUTCMonth()+1}.${currentDate.getUTCFullYear()} ${currentDate.getHours()}:${currentDate.getMinutes()}:${currentDate.getSeconds()}`);
   }, argv.interval);
-  
-  
-  console.log(argv.time)
 })
