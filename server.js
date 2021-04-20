@@ -4,7 +4,6 @@ const port = 3000
 const yargs = require('yargs');
 let intervalObj;
 
-
 const argv = yargs
     .option('interval', {
         alias: 'i',
@@ -19,8 +18,10 @@ const argv = yargs
     .argv;
 
 app.get('/', (req, res) => {
-  clearInterval(intervalObj);
-  res.send(formatCurrentData())
+  const timeoutObj = setTimeout(() => {
+    clearInterval(intervalObj);
+    res.send(formatCurrentData())
+  }, argv.time);
 })
 
 app.listen(port, () => {
